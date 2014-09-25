@@ -25,7 +25,8 @@ public class SavedLocation extends DataAccess {
   @Column(columnName = "player_name", dataType = DataType.STRING)
   public String player_name;
   
-  @Column(columnName = "location_strings", dataType = DataType.STRING, isList = true)
+  @Column(columnName = "location_strings", 
+			dataType = DataType.STRING, isList = true)
   public ArrayList<String> location_strings;
     
   private boolean must_insert = false;
@@ -41,7 +42,7 @@ public class SavedLocation extends DataAccess {
     player_name = name;
   }
     
-  private boolean equalsIsh(Location loc1, Location loc2) {//(1)
+  private boolean equalsIsh(Location loc1, Location loc2) {
     return ((int) loc1.getX()) == ((int) loc2.getX()) &&
            ((int) loc1.getZ()) == ((int) loc2.getZ());
   }

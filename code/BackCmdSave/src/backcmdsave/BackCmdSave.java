@@ -6,7 +6,7 @@
  * We make no guarantees that this code is fit for any purpose. 
  * Visit http://www.pragmaticprogrammer.com/titles/ahmine2 for more book information.
 ***/
-package backcmdsave; //(1)
+package backcmdsave;
 
 import java.util.ArrayList;
 import java.util.HashMap;

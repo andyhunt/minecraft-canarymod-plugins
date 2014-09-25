@@ -43,8 +43,9 @@ public class FlyingCreeper extends EZPlugin {
       bat.spawn(creep);
     
       PotionFactory potfact = Canary.factory().getPotionFactory();
-      PotionEffect potion = potfact.newPotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1);
-      
+      PotionEffect potion = 
+	potfact.newPotionEffect(PotionEffectType.INVISIBILITY, 
+		Integer.MAX_VALUE, 1);
       bat.addPotionEffect(potion);
       
     }

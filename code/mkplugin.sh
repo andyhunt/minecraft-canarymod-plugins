@@ -45,15 +45,16 @@ cat > $PLUGIN_NAME/build.sh <<EOF
 : \${MCSERVER:="\$HOME"/Desktop/server}
 
 MODS="\$MCSERVER/CanaryMod.jar"
+EZ="\$MCSERVER/lib/EZPlugin.jar"
 
 # Make sure that the jar
 # exists and is readable
-if [ ! -r \$MODS ]; then
+if [ ! -r "\$MODS" ]; then
     echo "\$MODS doesn't seem to exist.  Make sure you have CanaryMod.jar installed at \$MCSERVER and run again.  If your server is not at \$MCSERVER, set your MCSERVER environment variable to point to the correct directory."
     exit 1
 fi
 
-f [ ! -r \$EZ ]; then    
+if [ ! -r "\$EZ" ]; then    
   echo "\$EZ doesn't seem to exist.  Make sure you have EZPlugin.jar installed at \$MCSERVER/lib and run again." 
     exit 1
 fi
@@ -74,11 +75,11 @@ NAME=\`basename "\$HERE"\`
 
 # 1. Compile
 echo "Compiling with javac..."
-javac -Xlint:deprecation src/*/*.java -d bin -classpath "\$MODS" -sourcepath src -g:lines,vars,source || exit 2
+javac -Xlint:deprecation src/*/*.java -d bin -classpath "\$MODS":"\$EZ" -sourcepath src -g:lines,vars,source || exit 2
 
 # 2. Build the jar
 echo "Creating jar file..."
-jar -cfm dist/"$NAME.jar" Manifest.txt *.inf -C bin . || exit 3
+jar -cfm dist/"\$NAME.jar" Manifest.txt *.inf -C bin . || exit 3
 
 # 3. Copy to server
 echo "Deploying jar to \$MCSERVER/plugins..."
@@ -102,31 +103,9 @@ import net.canarymod.Canary;
 import net.canarymod.commandsys.*;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.api.entity.living.humanoid.Player;
+import com.pragprog.ahmine.ez.EZPlugin;
 
-
-public class $PLUGIN_NAME extends Plugin implements CommandListener {
-  public static Logman logger;
-    
-  public $PLUGIN_NAME() { 
-    logger = getLogman();
-  }
-  
-  @Override
-  public boolean enable() {
-    logger.info("Starting up");
-    
-    try {
-      Canary.commands().registerCommands(this, this, false);
-    } catch (CommandDependencyException e) {
-      logger.error("Duplicate command name");
-    }
-    return true;
-  }
-  
-  @Override
-  public void disable() {
-    logger.info("Stopping");
-  }
+public class $PLUGIN_NAME extends EZPlugin {
   
   @Command(aliases = { "$LC_PLUGIN_NAME" },
             description = "$LC_PLUGIN_NAME plugin",
@@ -150,6 +129,11 @@ main-class = $LC_PLUGIN_NAME.$PLUGIN_NAME
 name = $PLUGIN_NAME
 author = yourname
 version = 1.0
+
+EOF
+
+cat > $PLUGIN_NAME/Manifest.txt <<EOF
+Class-Path: ../lib/EZPlugin.jar
 
 EOF
 

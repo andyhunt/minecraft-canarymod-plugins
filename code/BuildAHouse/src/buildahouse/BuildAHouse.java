@@ -92,7 +92,7 @@ public class BuildAHouse extends Plugin implements CommandListener {
     }
     
     // Set the whole area to wood
-    makeCube(0,0,0,width, height, BlockType.BrickBlock);
+    makeCube(0,0,0,width, height, BlockType.OakWood);
     // Set the inside of the cube to air
     makeCube(1,1,1,width-2, height-2, BlockType.Air);
     

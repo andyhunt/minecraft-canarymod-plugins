@@ -19,10 +19,10 @@ import com.pragprog.ahmine.ez.EZPlugin;
 
 public class PlayerStuff extends EZPlugin {
 
-  @Command(aliases = { "playerstuff" },
+  @Command(aliases = { "whoami" },
             description = "Displays information about the player.",
             permissions = { "" },
-            toolTip = "/playerstuff")
+            toolTip = "/whoami")
   public void playerStuffCommand(MessageReceiver caller, String[] parameters) {
       if (caller instanceof Player) { 
         Player me = (Player)caller;

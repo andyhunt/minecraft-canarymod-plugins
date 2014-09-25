@@ -79,6 +79,7 @@ public class EZPlugin extends Plugin implements CommandListener {
   }
   
 
+  /* Pass in the entity type as EntityType.COW, etc. */
   /* You may need to cast the result to the specific entity, e.g (Cow) */
   public static EntityLiving spawnEntityLiving(Location loc, EntityType type) {
     EntityFactory factory = Canary.factory().getEntityFactory();

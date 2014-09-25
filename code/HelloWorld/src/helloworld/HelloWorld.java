@@ -17,11 +17,11 @@ import com.pragprog.ahmine.ez.EZPlugin;
 
 public class HelloWorld extends EZPlugin { //(3)
   
-  @Command(aliases = { "hello" },
+  @Command(aliases = { "hello" },//(4)
             description = "Displays the hello world message.",
             permissions = { "" },
             toolTip = "/hello")
-  public void helloCommand(MessageReceiver caller, String[] parameters) {
+  public void helloCommand(MessageReceiver caller, String[] parameters) {//(5)
     String msg = "That'sss a very niccce EVERYTHING you have there...";
     Canary.instance().getServer().broadcastMessage(msg);
   }

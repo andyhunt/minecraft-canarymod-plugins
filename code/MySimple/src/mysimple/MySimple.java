@@ -41,7 +41,7 @@ public class MySimple extends EZPlugin {
       me.chat("My name " + myName);
       
       Location loc = me.getLocation();
-      playSound(loc, SoundEffect.Type.GHAST_SCREAM);
+      playSound(loc, SoundEffect.Type.GHAST_SCREAM, volume, pitch);
       
       // ...and finish your code before this line.
     }

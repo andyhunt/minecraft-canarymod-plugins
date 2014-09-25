@@ -60,7 +60,8 @@ public class Stuck extends EZPlugin {
       int x = offsets[i][0]; 
       int y = offsets[i][1]; 
       int z = offsets[i][2];
-      setBlockAt(new Location(x + playerX, y + playerY, z + playerZ), BlockType.Stone);
+      setBlockAt(new Location(x+playerX, y+playerY, z+playerZ), 
+	BlockType.Stone);
     }
   }
 }
