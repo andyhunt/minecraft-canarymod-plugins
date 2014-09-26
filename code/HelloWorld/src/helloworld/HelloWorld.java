@@ -15,7 +15,7 @@ import net.canarymod.chat.MessageReceiver;
 import com.pragprog.ahmine.ez.EZPlugin;
 
 
-public class HelloWorld extends EZPlugin { //(3)
+public class HelloWorld extends EZPlugin {//(3)
   
   @Command(aliases = { "hello" },//(4)
             description = "Displays the hello world message.",

@@ -25,22 +25,41 @@ import com.pragprog.ahmine.ez.EZPlugin;
 public class ArrayAddMoreBlocks extends EZPlugin {
 
   public static List<BlockType> towerMaterials = new ArrayList<BlockType>();
+  public static Location towerLoc = null;
+  public static Location towerBase = null;
 
   public void buildTower(Player me) {
-    Location loc = me.getLocation();
-    loc.setX(loc.getX() + 1); // Not right on top of player
- 
+    if (towerLoc == null) {
+      towerLoc = new Location(me.getLocation());//(1)
+      towerLoc.setX(towerLoc.getX() + 2); // Not right on top of player
+      towerBase = new Location(towerLoc);//(2)
+    }
+    
     towerMaterials.add(BlockType.Glass);
     towerMaterials.add(BlockType.Stone);
     towerMaterials.add(BlockType.OakWood);
         
     for (BlockType material : towerMaterials) {
-      loc.setY(loc.getY() + 1); // go up one each time
-      setBlockAt(loc, material);
+      logger.info("Building block at " + printLoc(towerLoc));
+      setBlockAt(towerLoc, material);
+      towerLoc.setY(towerLoc.getY() + 1); // go up one each time
     }    
   }
-  
-    
+
+  public void clearTower() {
+    if (towerLoc == null) {
+      return;
+    }
+    while (towerBase.getY() < towerLoc.getY()) {
+      setBlockAt(towerBase, BlockType.Air);
+      logger.info("Clearing block at " + printLoc(towerBase));
+      towerBase.setY(towerBase.getY() + 1); // go up one each time
+    } 
+    towerLoc = null; // Reset for next tower  
+    towerBase = null;
+    towerMaterials.clear();
+  }  
+
   @Command(aliases = { "arrayaddmoreblocks" },
             description = "Create and add to an array of blocks",
             permissions = { "" },
@@ -51,4 +70,16 @@ public class ArrayAddMoreBlocks extends EZPlugin {
       buildTower(me);
     }
   } 
+  
+  @Command(aliases = { "arrayclearblocks" },
+            description = "Clear an array of blocks",
+            permissions = { "" },
+            toolTip = "/arrayclearblocks")
+  public void arrayclearCommand(MessageReceiver caller, String[] args) {
+    if (caller instanceof Player) { 
+      Player me = (Player)caller;
+      clearTower();
+    }
+  } 
+  
 }    

@@ -28,7 +28,6 @@ import net.canarymod.api.world.position.Vector3D;
 
 
 public class EZPlugin extends Plugin implements CommandListener {
-  
   /* Boilerplate methods for all of our plugins */
   public static Logman logger;
     
@@ -38,7 +37,7 @@ public class EZPlugin extends Plugin implements CommandListener {
   
   @Override
   public boolean enable() { 
-    logger.info ("Starting up");   
+    logger.info ("Starting up"); 
     try {
       Canary.commands().registerCommands(this, this, false);
     } catch (CommandDependencyException e) {
