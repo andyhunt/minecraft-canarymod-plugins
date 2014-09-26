@@ -27,9 +27,8 @@ public class Stuck extends EZPlugin {
             min = 2,
             toolTip = "/stuck name")
   public void stuckCommand(MessageReceiver caller, String[] args) {
-    if (caller instanceof Player) { 
-      Player me = (Player)caller;
-      Player victim = Canary.getServer().getPlayer(args[1]);
+    Player victim = Canary.getServer().getPlayer(args[1]);
+    if (victim != null) {
       stuck(victim);
     }
   }

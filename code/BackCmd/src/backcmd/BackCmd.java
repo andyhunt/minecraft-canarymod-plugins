@@ -36,13 +36,13 @@ public class BackCmd extends EZPlugin implements PluginListener {//(1)
     return super.enable(); // Call parent class's version too.
   }  
   
-  public boolean equalsIsh(Location loc1, Location loc2) {
+  public boolean equalsIsh(Location loc1, Location loc2) {//(4)
     return ((int) loc1.getX()) == ((int) loc2.getX()) &&
            ((int) loc1.getZ()) == ((int) loc2.getZ());
   }
 
   @HookHandler
-  public void onTeleport(TeleportHook event) {//(4)
+  public void onTeleport(TeleportHook event) {//(5)
     Player player = event.getPlayer();
     if (isTeleporting.contains(player)) {
       isTeleporting.remove(player);

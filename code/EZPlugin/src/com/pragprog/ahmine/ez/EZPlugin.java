@@ -26,7 +26,6 @@ import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.world.position.Vector3D;
 
-
 public class EZPlugin extends Plugin implements CommandListener {
   /* Boilerplate methods for all of our plugins */
   public static Logman logger;
@@ -92,7 +91,7 @@ public class EZPlugin extends Plugin implements CommandListener {
     loc.getWorld().spawnParticle(new Particle(loc.getX(), 
       loc.getY(), loc.getZ(), type));
   }
-  
+    
   public static void fling(LivingBase player, LivingBase entity, double factor) {
     double pitch = (player.getPitch() + 90.0F) * Math.PI / 180.0D;
     double rot = (player.getRotation() + 90.0F) * Math.PI / 180.0D;
