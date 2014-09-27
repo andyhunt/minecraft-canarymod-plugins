@@ -32,15 +32,6 @@ import net.canarymod.hook.player.ItemUseHook;
 import net.canarymod.plugin.PluginListener;
 import com.pragprog.ahmine.ez.EZPlugin;
 
-// NOTICE: 
-//
-// You may see errors like this in the server log:
-//
-// [ERROR]: "Silently" catching entity tracking error.
-//
-// It seems to be server bug, and is not caused by this plugin
-// as near as we can tell.
-
 public class CowShooter extends EZPlugin implements PluginListener {
 
   @Override
@@ -48,39 +39,20 @@ public class CowShooter extends EZPlugin implements PluginListener {
     Canary.hooks().registerListener(this, this);
     return super.enable(); // Call parent class's version too.
   }  
-  
-  private Vector3D getDirection(Player me) {
-    Vector3D v = new Vector3D();
-    double xz, rotX, rotY;
-    Location loc = me.getLocation();
-
-    rotY = loc.getPitch();
-    rotX = loc.getRotation();
-
-    v.setY(-Math.sin(Math.toRadians(rotY)));
-    xz = Math.cos(Math.toRadians(rotY));
-    v.setX(-xz * Math.sin(Math.toRadians(rotX)));
-    v.setZ(xz * Math.cos(Math.toRadians(rotX)));
-    return v;
-  }
-  
+   
   @HookHandler
   public void onInteract(ItemUseHook event) {//(2)
 
     final Player player = event.getPlayer();
 
     if (player.getItemHeld().getType() == ItemType.Leather) {
-      Location loc = player.getLocation();
-      Vector3D vec = getDirection(player);
-      
-      vec.multiply(3.0);
-      vec.setY(vec.getY() * 4);
+      Location loc = player.getLocation();     
       loc.setY(loc.getY() + 2);
       
       final Cow cow = (Cow)spawnEntityLiving(loc, EntityType.COW);//(3)
-      cow.getAITaskManager().addTask(10, new CowTask(cow));
-      cow.spawn();
-      //cow.moveEntity(vec.getX(), vec.getY(), vec.getZ());
+      
+      Canary.getServer().addSynchronousTask(new CowTask(cow));
+      
       fling(player, cow, 3);
       cow.setFireTicks(100);
     }

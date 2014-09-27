@@ -8,78 +8,34 @@
 ***/
 package cowshooter;
 
+import net.canarymod.Canary;
 import net.canarymod.api.entity.EntityType;
 import net.canarymod.api.world.position.Location;
 import net.canarymod.api.entity.living.animal.Cow;
 import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
-import net.canarymod.api.ai.AIBase;
+import net.canarymod.tasks.ServerTask;
+import com.pragprog.ahmine.ez.EZPlugin;
 
-public class CowTask implements AIBase {
+public class CowTask extends ServerTask {
     
     private Cow cow;
-    private boolean running;
-    
-    private boolean isStopped() {
-      Location loc = cow.getLocation();
-      Block b = cow.getWorld().getBlockAt((int)loc.getX(),
-        (int)loc.getY()-2, (int)loc.getZ());
-      return b.getType() != BlockType.Air;
-    }
-    
+        
     public CowTask(Cow myCow) {
+        super(Canary.getServer(), 0, true); // delay, isContinuous
         cow = myCow;
-        running = true;
     }
     
-    /*
-     * Checks if you are ready to begin executing.
-     */
-    public boolean shouldExecute() {
-      return running;
-    } 
-    
-    /* 
-     * Checks if you should continue executing (for continuous tasks)
-     */
-    public boolean continueExecuting() {
-      return running;
-    }  
-    
-    /* 
-     * Checks if you are Continuous, or One-Shot? 
-     */
-    public boolean isContinuous() {
-      return true;
-    }
-     
-    /* 
-     * Callback to begin executing 
-     */
-    public void startExecuting() {
-    }
-    
-    /* 
-     * Callback on termination 
-     */
-    public void resetTask() {
-      cow = null; // Free up for GC
-    } 
-    
-    /* 
-     * Callback to run.
-     */
-    public void updateTask() {
-      if (isStopped()) { 
+    public void run() {
+      if (EZPlugin.isOnGround(cow)) { 
         Location loc = cow.getLocation();
         cow.setHealth(0);
         cow.kill();       
         cow.getWorld().makeExplosion(cow, 
           loc.getX(), loc.getY(), loc.getZ(), 
-          1.0f, true);
-        running = false;
-        resetTask();
+          2.0f, true);
+        Canary.getServer().removeSynchronousTask(this);
       } else {
         cow.setFireTicks(100);
         cow.setHealth((float)cow.getMaxHealth());
