@@ -65,19 +65,16 @@ public class CreeperCow extends EZPlugin implements PluginListener {
       loc.setY(world.getHighestBlockAt((int)loc.getX(), (int)loc.getZ()) + 2);
       logger.info("[CreeperCow] spawned cow at " + printLoc(loc));
       Cow cow = (Cow)spawnEntityLiving(loc, EntityType.COW);
-      CreeperCowTimer ai = new CreeperCowTimer(this, cow);
-      synchronized(allCows) {
-        allCows.put(cow, ai);
-      }
-      cow.getAITaskManager().addTask(1024, ai);
+      CreeperCowTimer task = new CreeperCowTimer(this, cow);
+      Canary.getServer().addSynchronousTask(task);
+      allCows.put(cow, task);
     }
   }
   
   public void cowDied(Cow cow) {
     logger.info("[CreeperCow] cow died.");
-    synchronized(allCows) {
-      allCows.remove(cow);
-    }
+    allCows.remove(cow);
+
   }
 
   @Command(aliases = { "creepercows" },
@@ -142,15 +139,12 @@ public class CreeperCow extends EZPlugin implements PluginListener {
     if (caller instanceof Player) { 
       Player me = (Player)caller; 
       List<CreeperCowTimer> list = new ArrayList<CreeperCowTimer>();
-      synchronized(allCows) {
-        for (Cow c : allCows.keySet()) {
-          CreeperCowTimer superCow = allCows.get(c);
-          list.add(superCow);
-        }
-      }
-      
+      for (Cow c : allCows.keySet()) {
+        CreeperCowTimer superCow = allCows.get(c);
+        list.add(superCow);
+      }  
       for (CreeperCowTimer superCow : list) {
-          superCow.explode();
+        superCow.explode();
       }
     }    
   }  
@@ -173,27 +167,18 @@ public class CreeperCow extends EZPlugin implements PluginListener {
                        16, 1);
     }
   } 
-
-
+  
   @HookHandler
   public void onChunkUnload(ChunkUnloadHook event) {
     Chunk chunk = event.getChunk();
-    if (chunk != null) {
-      List<Entity>[] all = chunk.getEntityLists();
-      if (all != null) {
-        for(int i = 0; i < all.length; i++) {
-          if (all[i] != null) {
-            for (Entity ent : all[i]) { // List of 16 block subchunks
-              if (ent instanceof Cow) {
-                Cow cow = (Cow) ent;
-                synchronized(allCows) {
-                  if (allCows.containsKey(cow)) {
-                    allCows.get(cow).resetTask();
-                    allCows.remove(cow);
-                  }
-                }
-              }
-            }
+    List<Entity>[] all = chunk.getEntityLists();
+    for(int i = 0; i < all.length; i++) {
+      for (Entity ent : all[i]) { // List of 16 block subchunks
+        if (ent instanceof Cow) {
+          Cow cow = (Cow) ent;
+          if (allCows.containsKey(cow)) {
+            allCows.get(cow).removeMe();
+            allCows.remove(cow);
           }
         }
       }

@@ -18,19 +18,18 @@ import net.canarymod.api.entity.living.animal.Cow;
 import net.canarymod.api.world.position.Vector3D;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
-import net.canarymod.api.ai.AIBase;
+import net.canarymod.tasks.ServerTask;
 import com.pragprog.ahmine.ez.EZPlugin;
 
 
-public class CreeperCowTimer implements AIBase {
+public class CreeperCowTimer extends ServerTask {
   private Cow cow;
   private CreeperCow plugin;
-  private boolean running;
   
   CreeperCowTimer(CreeperCow parentPlugin, Cow aCow) {
+    super(Canary.getServer(), 0, true); // delay, isContinuous
     cow = aCow;
     plugin = parentPlugin;
-    running = true;
   }
   
   public Player getClosestPlayer(Location loc) { //return -1 on failure
@@ -68,54 +67,31 @@ public class CreeperCowTimer implements AIBase {
     cow.getWorld().makeExplosion(cow, 
           cowLoc.getX(), cowLoc.getY(), cowLoc.getZ(), 
           3.0f, true);
-            
+    removeMe();
+  }
+  
+  // We are all done, either from chunk unload or explosion      
+  public void removeMe() {
     cow.kill();
-    running = false; // this task
+    Canary.getServer().removeSynchronousTask(this);
   }
     
   // Jump this cow toward the target
   public void jump(Location target) {
     Location cowLoc = cow.getLocation();
-    double multFactor = 0.1;
+    double multFactor = 0.075;
     Vector3D v = new Vector3D(
       (target.getX() - cowLoc.getX()) * multFactor,
-      1.0,
+      0.8,
       (target.getZ() - cowLoc.getZ()) * multFactor
     );
-    cow.moveEntity(v.getX() + (Math.random() * -0.5), 
+    cow.moveEntity(v.getX() + (Math.random() * -0.1), 
       v.getY(), 
-      v.getZ() + (Math.random() * -0.5)); 
+      v.getZ() + (Math.random() * -0.1)); 
   }  
-  
-   // Checks if you are ready to begin executing.
-  public boolean shouldExecute() {
-    return running;
-  }
-  
-  // Checks if you are Continuous, or One-Shot? 
-  public boolean isContinuous() {
-    return true;
-  }
-  
-  // Checks if you should continue executing (for continuous tasks)
-  public boolean continueExecuting() {
-    return running;
-  }
-   
-  // Callback to begin executing 
-  public void startExecuting() {
-  }
-  
-  // Callback on termination
-  public void resetTask() {
-    running = false;
-    cow.kill();
-    cow = null;
-    plugin = null;
-  }
-  
+    
   // Callback to run and execute body of task
-  public void updateTask() {
+  public void run() {
     // In 1.7.10+, you can use cow.isOnGround() instead
     if (EZPlugin.isOnGround(cow)) { // otherwise it's still jumping
       Location cowLoc = cow.getLocation();
