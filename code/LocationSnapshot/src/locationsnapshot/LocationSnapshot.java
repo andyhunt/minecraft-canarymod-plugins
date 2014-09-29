@@ -38,11 +38,11 @@ public class LocationSnapshot extends EZPlugin {
       apl.y = loc.getY();
       apl.z = loc.getZ();
 
-      HashMap<String, Object> search = new HashMap<String, Object>();
+      HashMap<String, Object> search = new HashMap<String, Object>();//(1)
       search.put("player_name", player.getDisplayName());
-      
+     
       try {
-        Database.get().update(apl, search); 
+        Database.get().update(apl, search);//(2) 
       } catch (DatabaseWriteException e) {
         logger.error(e);
         logger.info("error");
@@ -59,6 +59,7 @@ public class LocationSnapshot extends EZPlugin {
       AllPlayerLocations apl = new AllPlayerLocations();
       HashMap<String, Object> search = new HashMap<String, Object>();
       search.put("player_name", name);
+      
       try {
         Database.get().load(apl, search);
       } catch (DatabaseReadException e) {

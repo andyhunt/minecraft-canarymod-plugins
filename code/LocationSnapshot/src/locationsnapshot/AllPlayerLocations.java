@@ -14,7 +14,7 @@ import net.canarymod.database.DataAccess;
 
 
 public class AllPlayerLocations extends DataAccess {
-  
+
   @Column(columnName = "player_name", 
     columnType = Column.ColumnType.PRIMARY, dataType = DataType.STRING)
   public String player_name;

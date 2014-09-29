@@ -30,19 +30,19 @@ public class SquidBombConfig extends EZPlugin {
   private static double squidDropHeight;
   private static boolean setFire;
   
-  // config/squidbombconfig.SquidBombConfig/squidbombconfig.SquidBombConfig.cfg:
+  // Server/config/SquidBombConfigSquidBombConfig.cfg:
   //
   //numSquids=6
   //squidDropHeight=5
   //setFire=true
   
   public boolean enable() {
-    super.enable();
+    super.enable();//Compiler will do this automatically
     logger.info("Getting config data");
     PropertiesFile config = getConfig();
     numSquids = config.getInt("numSquids", 6);
     squidDropHeight = config.getDouble("squidDropHeight", 5.0);
-    setFire = config.getBoolean("setFire", true);
+    setFire = config.getBoolean("setFire", false);
     config.save(); // Create a new one if needed
     return true;
   }
@@ -78,7 +78,7 @@ public class SquidBombConfig extends EZPlugin {
         if (entity instanceof Squid) {
           Squid victim = (Squid)entity;
           if (setFire) {
-            victim.setFireTicks(1000);
+            victim.setFireTicks(20);
           } else {
             victim.setHealth(0.0f);
           }//(2)

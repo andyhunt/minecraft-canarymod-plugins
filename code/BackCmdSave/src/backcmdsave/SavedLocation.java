@@ -28,8 +28,6 @@ public class SavedLocation extends DataAccess {
   @Column(columnName = "location_strings", 
 			dataType = DataType.STRING, isList = true)
   public ArrayList<String> location_strings;
-    
-  private boolean must_insert = false;
   
   public SavedLocation() {
     super("saved_player_locations");
@@ -40,6 +38,29 @@ public class SavedLocation extends DataAccess {
   public SavedLocation(String name) {
     super("saved_player_locations");
     player_name = name;
+  }
+  
+  public void push(Location loc) {
+    myRead(player_name);
+    String s = locationToString(loc);
+    location_strings.add(s);
+    myWrite();
+  }
+
+  public Location pop(Location here) {    
+    myRead(player_name);
+    if (location_strings.size() == 0) {
+      return null;
+    }
+    
+    Location loc = peek_stack();  
+    while (equalsIsh(loc, here) && location_strings.size() > 1) {
+      pop_stack();
+      loc = peek_stack();
+    }
+            
+    myWrite();
+    return loc;
   }
     
   private boolean equalsIsh(Location loc1, Location loc2) {
@@ -60,36 +81,21 @@ public class SavedLocation extends DataAccess {
     }
     if (location_strings == null) {
       player_name = name;
-      must_insert = true;
       location_strings = new ArrayList<String>();
     }
   }
   
-  private void mySave() {
+  private void myWrite() {
     HashMap<String, Object> search = new HashMap<String, Object>();
     search.put("player_name", player_name);
-    if (must_insert) {
-      try {
-        Database.get().insert(this);    
-      } catch (DatabaseWriteException e) {
-          //Error, couldn't write!
-          System.err.println("Insert failed");
-      }      
-    } else {
-      try {
-        Database.get().update(this, search);    
-      } catch (DatabaseWriteException e) {
-        //Error, couldn't write!
-        System.err.println("Update failed");
-      }
+
+    try {
+      Database.get().update(this, search);    
+    } catch (DatabaseWriteException e) {
+      //Error, couldn't write!
+      System.err.println("Update failed");
     }
-  }
-  
-  public void push(Location loc) {
-    myRead(player_name);
-    String s = locationToString(loc);
-    location_strings.add(s);
-    mySave();
+    
   }
   
   private Location peek_stack() {
@@ -105,23 +111,7 @@ public class SavedLocation extends DataAccess {
     location_strings.remove(location_strings.size()-1);
     return loc;
   }
-  
-  public Location pop(Location here) {    
-    myRead(player_name);
-    if (location_strings.size() == 0) {
-      return null;
-    }
     
-    Location loc = peek_stack();  
-    while (equalsIsh(loc, here) && location_strings.size() > 1) {
-      pop_stack();
-      loc = peek_stack();
-    }
-            
-    mySave();
-    return loc;
-  }
-  
   private String locationToString(Location loc) {
     return loc.getX() + "|" +
             loc.getY() + "|" +
