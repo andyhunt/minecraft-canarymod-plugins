@@ -12,10 +12,28 @@ import net.canarymod.logger.Logman;
 import net.canarymod.Canary;
 import net.canarymod.commandsys.*;
 import net.canarymod.chat.MessageReceiver;
-import com.pragprog.ahmine.ez.EZPlugin;
 
+public class HelloWorld extends Plugin implements CommandListener {//(3)
 
-public class HelloWorld extends EZPlugin {//(3)
+  public static Logman logger;
+    
+  public HelloWorld() { 
+    logger = getLogman();
+  }
+  @Override
+  public boolean enable() { 
+    logger.info ("Starting up");   
+    try {
+      Canary.commands().registerCommands(this, this, false);
+    } catch (CommandDependencyException e) {
+      logger.error("Duplicate command name");
+    }
+    return true;
+  }
+  
+  @Override
+  public void disable() {
+  }
   
   @Command(aliases = { "hello" },//(4)
             description = "Displays the hello world message.",
