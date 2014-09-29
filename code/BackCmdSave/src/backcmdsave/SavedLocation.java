@@ -21,30 +21,39 @@ import net.canarymod.database.Database;
 import net.canarymod.Canary;
 
 public class SavedLocation extends DataAccess {
-  
-  @Column(columnName = "player_name", dataType = DataType.STRING)
+
+  @Column(columnName = "player_name", 
+    columnType = Column.ColumnType.PRIMARY,
+    dataType = DataType.STRING)
   public String player_name;
   
   @Column(columnName = "location_strings", 
-			dataType = DataType.STRING, isList = true)
+      dataType = DataType.STRING, 
+      isList = true)
   public ArrayList<String> location_strings;
   
+
   public SavedLocation() {
     super("saved_player_locations");
   }
   
-  public DataAccess getInstance() { return new SavedLocation();} // Required
-
   public SavedLocation(String name) {
     super("saved_player_locations");
     player_name = name;
   }
   
+  public DataAccess getInstance() { 
+    return new SavedLocation();
+  } // Required
+  
   public void push(Location loc) {
     myRead(player_name);
-    String s = locationToString(loc);
-    location_strings.add(s);
-    myWrite();
+    //Make sure previous location is different if it exists
+    if (peek_stack() == null || 
+      !equalsIsh(peek_stack(), loc)) { 
+      push_stack(loc);
+      myWrite();
+    }
   }
 
   public Location pop(Location here) {    
@@ -52,12 +61,7 @@ public class SavedLocation extends DataAccess {
     if (location_strings.size() == 0) {
       return null;
     }
-    
-    Location loc = peek_stack();  
-    while (equalsIsh(loc, here) && location_strings.size() > 1) {
-      pop_stack();
-      loc = peek_stack();
-    }
+    Location loc = pop_stack();
             
     myWrite();
     return loc;
@@ -98,6 +102,11 @@ public class SavedLocation extends DataAccess {
     
   }
   
+  private void push_stack(Location loc) {
+    String s = locationToString(loc);
+    location_strings.add(s);
+  }
+  
   private Location peek_stack() {
     if (location_strings.isEmpty()) {
       return null;
@@ -113,18 +122,18 @@ public class SavedLocation extends DataAccess {
   }
     
   private String locationToString(Location loc) {
-    return loc.getX() + "|" +
-            loc.getY() + "|" +
+    return loc.getX() + "," +
+            loc.getY() + "," +
             loc.getZ();
   }
     
   private Location stringToLocation(String str) {
-    String[] arr = str.split("\\|");
+    String[] arr = str.split(",");
     double x = Double.parseDouble(arr[1]);
     double y = Double.parseDouble(arr[1]);
     double z = Double.parseDouble(arr[1]);
     return new Location(x,y, z);
   }
-
+  
 }
 

@@ -42,7 +42,6 @@ public class BackCmdSave extends EZPlugin implements PluginListener {
     } else {
       SavedLocation sp = new SavedLocation(player.getName());
       sp.push(player.getLocation());
-      sp.push(event.getDestination());
     }
   }
 
