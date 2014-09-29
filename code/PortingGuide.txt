@@ -45,38 +45,34 @@ Here are some differences I've noted as I transition from Bukkit to CanaryMod:
     
 1. The `@EventHandler` annotation is named `@HookHandler`
 
-1. The Scheduler is replaced with an AI subsystem.  For a scheduled task, start with this skeleton:
+1. The Scheduler is only slightly different.  For a scheduled task, start with this skeleton:
 
-        import net.canarymod.api.ai.AIBase;
-        public class MyTask implements AIBase {
-
-        // Checks if you are ready to begin executing.
-        public boolean shouldExecute() {
-        }
-        
-        // Checks if you are Continuous, or One-Shot? 
-        public boolean isContinuous() {
-        }
-        
-        // Checks if you should continue executing (for continuous tasks)
-        public boolean continueExecuting() {
-        }
+        package examplepackage;
+        import net.canarymod.Canary;
+        import net.canarymod.tasks.ServerTask;
+        import com.pragprog.ahmine.ez.EZPlugin;
          
-        // Callback to begin executing 
-        public void startExecuting() {
+        public class ExampleTask extends ServerTask {
+         
+          private final EZPlugin plugin;
+
+          public ExampleTask(JavaPlugin plugin) {
+            super(Canary.getServer(), 0, true); // delay, isContinuous
+            this.plugin = plugin;
+            // you can keep a reference to your plugin as I've done here,
+            // or to any other variable you pass in
+          }
+
+          public void run() {
+            // Do something interesting...
+            Canary.instance().getServer().broadcastMessage("Surprise!");
+          }
         }
         
-        // Callback on termination
-        public void resetTask() {
-        }
-        
-        // Callback to run and execute body of task
-        public void updateTask() {
-        }
-        
-    And set it up by adding an AI Manager to your spawned entity (in this case, a cow):
+    To schedule and launch the task, create a new task and add it to the server:
     
-        cow.getAITaskManager().addTask(priority, new MyTask(...));
+        ExampleTask task = new ExampleTask(plugin);
+        Canary.getServer().addSynchronousTask(task);
 
 ## Links
 
