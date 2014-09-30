@@ -34,7 +34,7 @@ public class LavaVision extends EZPlugin {
     if (caller instanceof Player) { 
       Player me = (Player)caller;
       
-      BlockIterator sightItr = new BlockIterator(new LineTracer(me));
+      BlockIterator sightItr = new BlockIterator(new LineTracer(me), true);
       while (sightItr.hasNext()) {
         Block b = sightItr.next();
         spawnParticle(b.getLocation(), Particle.Type.LAVASPARK);    
