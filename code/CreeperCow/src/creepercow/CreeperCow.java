@@ -101,11 +101,11 @@ public class CreeperCow extends EZPlugin implements PluginListener {
     }
   }
   
-  @Command(aliases = { "testSpawnCows" },
+  @Command(aliases = { "testspawncows" },
       description = "Test cow spawning",
       permissions = { "" },
       min = 3, // Number of arguments
-      toolTip = "/testSpawnCows <size of square> <number to spawn>")
+      toolTip = "/testspawncows <size of square> <number to spawn>")
   public void testSpawnCommand(MessageReceiver caller, String[] args) {
     if (caller instanceof Player) { 
       Player me = (Player)caller;       
@@ -115,11 +115,11 @@ public class CreeperCow extends EZPlugin implements PluginListener {
     }
   }
 
-  @Command(aliases = { "testJump" },
+  @Command(aliases = { "testjump" },
       description = "Test cow jumping",
       permissions = { "" },
       min = 1, // Number of arguments
-      toolTip = "/testJump")
+      toolTip = "/testjump")
   public void testJumpCommand(MessageReceiver caller, String[] args) {
     if (caller instanceof Player) { 
       Player me = (Player)caller; 
@@ -130,11 +130,11 @@ public class CreeperCow extends EZPlugin implements PluginListener {
     }
   }
  
-  @Command(aliases = { "testExplode" },
+  @Command(aliases = { "testexplode" },
       description = "Test cow explode",
       permissions = { "" },
       min = 1, // Number of arguments
-      toolTip = "/testExplode")
+      toolTip = "/testexplode")
   public void testExplodeCommand(MessageReceiver caller, String[] args) {
     if (caller instanceof Player) { 
       Player me = (Player)caller; 
