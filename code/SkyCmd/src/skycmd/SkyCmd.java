@@ -21,10 +21,10 @@ import com.pragprog.ahmine.ez.EZPlugin;
 
 public class SkyCmd extends EZPlugin {
   
-  @Command(aliases = { "skycmd" },//(1)
+  @Command(aliases = { "sky" },//(1)
             description = "Fling all creatures into the air",
             permissions = { "" },
-            toolTip = "/skycmd")
+            toolTip = "/sky")
   public void skyCommand(MessageReceiver caller, String[] parameters) {
     if (caller instanceof Player) {//(2) 
       Player me = (Player)caller;//(3)       

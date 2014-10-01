@@ -56,6 +56,5 @@ public class CowShooter extends EZPlugin implements PluginListener {
       fling(player, cow, 3);
       cow.setFireTicks(100);
     }
-  }
-  
+  } 
 }

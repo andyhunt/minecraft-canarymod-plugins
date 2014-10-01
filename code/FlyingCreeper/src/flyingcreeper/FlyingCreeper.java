@@ -47,7 +47,6 @@ public class FlyingCreeper extends EZPlugin {
 	potfact.newPotionEffect(PotionEffectType.INVISIBILITY, 
 		Integer.MAX_VALUE, 1);
       bat.addPotionEffect(potion);
-      
     }
   }
 }

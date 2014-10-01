@@ -19,7 +19,7 @@ import com.pragprog.ahmine.ez.EZPlugin;
 
 public class MySimple extends EZPlugin {
   
-  public static int howlong(int years) {
+  public static long howlong(int years) {
     return years * 365 * 24 * 60 * 60;
   }
     
@@ -34,11 +34,11 @@ public class MySimple extends EZPlugin {
       
       int myAge = 99;
       int myAgeDoubled = myAge * 2;
-      float volume = 0.1f;
-      float pitch = 1.0f;
+      float volume = 2.0f;
+      float pitch = 10.0f;
       double dayOnIo = 152853.5047;
       String myName = "Andy Hunt";
-      int secondsOld = howlong(10);
+      long secondsOld = howlong(10);
   
       me.chat("My age " + myAge);
       me.chat("My age doubled " + myAgeDoubled);
@@ -47,7 +47,7 @@ public class MySimple extends EZPlugin {
       me.chat("My age in seconds " + secondsOld);
       
       Location loc = me.getLocation();
-      loc.getWorld().playSound(new SoundEffect(SoundEffect.Type.GHAST_SCREAM, loc.getX(), loc.getY(), loc.getZ(), 1.0f, 1.0f));
+      loc.getWorld().playSound(new SoundEffect(SoundEffect.Type.GHAST_SCREAM, loc.getX(), loc.getY(), loc.getZ(), volume, pitch));
       
       // ...and finish your code before this line.
     }
