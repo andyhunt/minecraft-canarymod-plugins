@@ -45,7 +45,7 @@ jar -cf dist/"$NAME.jar" *.inf -C bin . || exit 3
 
 # 3. Copy to server
 echo "Deploying jar to $MCSERVER/lib..."
-test ! -d "$MCSERVER/lib" && mkdir -p "$MCSERVER/lib" 
+test ! -d "$MCSERVER/lib" && mkdir "$MCSERVER/lib" 
 cp dist/$NAME.jar "$MCSERVER/lib" || exit 4
 
 echo "Completed Successfully."
