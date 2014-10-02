@@ -45,7 +45,7 @@ jar -cf dist/"$NAME.jar" *.inf -C bin . || exit 3
 
 # 3. Copy to server
 echo "Deploying jar to $MCSERVER/plugins..."
-test ! -d "$MCSERVER/plugins" && mkdir -p "$MCSERVER/plugins" 
+test ! -d "$MCSERVER/plugins" && mkdir "$MCSERVER/plugins" 
 cp dist/$NAME.jar "$MCSERVER"/plugins || exit 4
 
 echo "Completed Successfully."

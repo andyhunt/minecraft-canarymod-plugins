@@ -47,6 +47,13 @@ cat > $PLUGIN_NAME/build.sh <<EOF
 MODS="\$MCSERVER/CanaryMod.jar"
 EZ="\$MCSERVER/lib/EZPlugin.jar"
 
+if [ "\$OS" = "Windows_NT" ]
+then
+    OSPS=";"
+else
+    OSPS=":"
+fi
+
 # Make sure that the jar
 # exists and is readable
 if [ ! -r "\$MODS" ]; then
@@ -75,7 +82,7 @@ NAME=\`basename "\$HERE"\`
 
 # 1. Compile
 echo "Compiling with javac..."
-javac -Xlint:deprecation src/*/*.java -d bin -classpath "\$MODS":"\$EZ" -sourcepath src -g:lines,vars,source || exit 2
+javac -Xlint:deprecation src/*/*.java -d bin -classpath "\$MODS\$OSPS\$EZ" -sourcepath src -g:lines,vars,source || exit 2
 
 # 2. Build the jar
 echo "Creating jar file..."
@@ -83,7 +90,7 @@ jar -cfm dist/"\$NAME.jar" Manifest.txt *.inf -C bin . || exit 3
 
 # 3. Copy to server
 echo "Deploying jar to \$MCSERVER/plugins..."
-test ! -d "\$MCSERVER/plugins" && mkdir -p "\$MCSERVER/plugins" 
+test ! -d "\$MCSERVER/plugins" && mkdir "\$MCSERVER/plugins" 
 cp dist/\$NAME.jar "\$MCSERVER/plugins" || exit 4
 
 echo "Completed Successfully."
