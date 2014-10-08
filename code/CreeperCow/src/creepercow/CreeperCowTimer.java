@@ -92,8 +92,7 @@ public class CreeperCowTimer extends ServerTask {
     
   // Callback to run and execute body of task
   public void run() {
-    // In 1.7.10+, you can use cow.isOnGround() instead
-    if (EZPlugin.isOnGround(cow)) { // otherwise it's still jumping
+    if (cow.isOnGround()) { // otherwise it's still jumping
       Location cowLoc = cow.getLocation();
       Player p = cow.getWorld().getClosestPlayer(cow, 10000);
       if (p == null) {

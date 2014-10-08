@@ -102,14 +102,6 @@ public class EZPlugin extends Plugin implements CommandListener {
     entity.moveEntity(x * factor, y + 0.5, z * factor);
   }
   
-  // In 1.7.10+, can use cow.isOnGround() instead
-  public static boolean isOnGround(EntityLiving thing) {
-      Location loc = thing.getLocation();
-      Block b = thing.getWorld().getBlockAt((int)loc.getX(),
-        (int)loc.getY()-2, (int)loc.getZ());
-      return (b.getType() != BlockType.Air);
-  }
-  
   public static String printLoc(Location loc) {
     return "" + (int)loc.getX() + ", " +
     (int)loc.getY() + ", " +

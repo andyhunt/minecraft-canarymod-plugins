@@ -30,14 +30,14 @@ public class SquidBombConfig extends EZPlugin {
   private static double squidDropHeight;
   private static boolean setFire;
   
-  // Server/config/SquidBombConfigSquidBombConfig.cfg:
+  // Server/config/SquidBombConfig/SquidBombConfig.cfg:
   //
   //numSquids=6
   //squidDropHeight=5
   //setFire=true
   
   public boolean enable() {
-    super.enable();//Compiler will do this automatically
+    super.enable();//Compiler will call this if you don't
     logger.info("Getting config data");
     PropertiesFile config = getConfig();
     numSquids = config.getInt("numSquids", 6);
@@ -65,14 +65,14 @@ public class SquidBombConfig extends EZPlugin {
     }
   } 
     
-  @Command(aliases = { "squidpurge" },
+  @Command(aliases = { "squidpurge" },//(1) 
             description = "Get rid of squid.",
             permissions = { "" },
             toolTip = "/squidpurge")
   public void squidpurgeCommand(MessageReceiver caller, String[] args) {
     if (caller instanceof Player) { 
       Player me = (Player)caller;    
-    //(1)  
+ 
       Collection<EntityLiving> squidlist = me.getWorld().getEntityLivingList();
       for (EntityLiving entity : squidlist) {
         if (entity instanceof Squid) {
@@ -81,11 +81,11 @@ public class SquidBombConfig extends EZPlugin {
             victim.setFireTicks(20);
           } else {
             victim.setHealth(0.0f);
-          }//(2)
+          }
         }
       } 
     }
-  }
+  }//(2)
   
 }
 

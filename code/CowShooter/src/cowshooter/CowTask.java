@@ -28,7 +28,7 @@ public class CowTask extends ServerTask {
     }
     
     public void run() {
-      if (EZPlugin.isOnGround(cow)) { 
+      if (cow.isOnGround()) { 
         Location loc = cow.getLocation();
         cow.setHealth(0);
         cow.kill();       

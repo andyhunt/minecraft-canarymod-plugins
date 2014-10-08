@@ -34,17 +34,12 @@ public class PlayerStuff extends EZPlugin {
         int food = me.getHunger();
         float health = me.getHealth();
         Location loc = me.getLocation();
-        boolean sleeping = me.isSleeping();
-        String sleepMsg = "";
-        if (!sleeping) {
-          sleepMsg = "not "; //(1)
-        }
+
         me.chat("Your experience points are " + exp);
-        me.chat("\tfood is " + food);
-        me.chat("\thealth is " + health);
-        me.chat("\tyou are at " + printLoc(loc));
-        me.chat("\twater falls from the sky ");
-        me.chat("and you are " + sleepMsg + "sleeping.");
+        me.chat("food is " + food);
+        me.chat("health is " + health);
+        me.chat("you are at " + printLoc(loc));
+        me.chat("water falls from the sky ");
     }
   }
 }

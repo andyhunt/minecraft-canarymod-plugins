@@ -33,7 +33,7 @@ public class NamedSigns extends EZPlugin {
   }
   
   private void parseArgs(Player me, String [] args) {    
-    if (args.length < 2) {//(3)
+    if (args.length < 3) {//(3)
       usage(me);
       return;
     }
@@ -41,7 +41,7 @@ public class NamedSigns extends EZPlugin {
       makeNewSign(me, args);
     }
     if (args[1].equalsIgnoreCase("set")) {
-      if (args.length < 3) {//(4)
+      if (args.length < 4) {//(4)
         usage(me);
         return;
       }
@@ -80,7 +80,6 @@ public class NamedSigns extends EZPlugin {
   @Command(aliases = { "signs" },
             description = "Create and name sign posts",
             permissions = { "" },
-            min = 3,
             toolTip = "/signs new name, or /signs set name message")
   public void signsCommand(MessageReceiver caller, String[] args) {
     if (caller instanceof Player) { 

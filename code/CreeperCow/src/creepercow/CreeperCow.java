@@ -74,7 +74,6 @@ public class CreeperCow extends EZPlugin implements PluginListener {
   public void cowDied(Cow cow) {
     logger.info("[CreeperCow] cow died.");
     allCows.remove(cow);
-
   }
 
   @Command(aliases = { "creepercows" },

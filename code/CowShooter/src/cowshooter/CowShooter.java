@@ -43,18 +43,18 @@ public class CowShooter extends EZPlugin implements PluginListener {
   @HookHandler
   public void onInteract(ItemUseHook event) {//(2)
 
-    final Player player = event.getPlayer();
+    Player player = event.getPlayer();
 
     if (player.getItemHeld().getType() == ItemType.Leather) {
       Location loc = player.getLocation();     
       loc.setY(loc.getY() + 2);
       
-      final Cow cow = (Cow)spawnEntityLiving(loc, EntityType.COW);//(3)
+      Cow cow = (Cow)spawnEntityLiving(loc, EntityType.COW);//(3)
       
       Canary.getServer().addSynchronousTask(new CowTask(cow));
       
       fling(player, cow, 3);
-      cow.setFireTicks(100);
+      cow.setFireTicks(0);
     }
   } 
 }

@@ -44,7 +44,7 @@ public class SavedLocation extends DataAccess {
   
   public DataAccess getInstance() { 
     return new SavedLocation();
-  } // Required
+  }
   
   public void push(Location loc) {
     myRead(player_name);
@@ -129,10 +129,10 @@ public class SavedLocation extends DataAccess {
     
   private Location stringToLocation(String str) {
     String[] arr = str.split(",");
-    double x = Double.parseDouble(arr[1]);
+    double x = Double.parseDouble(arr[0]);
     double y = Double.parseDouble(arr[1]);
-    double z = Double.parseDouble(arr[1]);
-    return new Location(x,y, z);
+    double z = Double.parseDouble(arr[2]);
+    return new Location(x, y, z);
   }
   
 }

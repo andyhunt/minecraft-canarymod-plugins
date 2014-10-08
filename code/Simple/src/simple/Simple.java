@@ -7,15 +7,13 @@
  * Visit http://www.pragmaticprogrammer.com/titles/ahmine2 for more book information.
 ***/
 package simple;
-import net.canarymod.plugin.Plugin;//(1)
+import net.canarymod.plugin.Plugin;
 import net.canarymod.logger.Logman;
 import net.canarymod.Canary;
 import net.canarymod.commandsys.*;
 import net.canarymod.chat.MessageReceiver;
 import net.canarymod.api.entity.living.humanoid.Player;
-import net.canarymod.api.world.effects.SoundEffect;
-import net.canarymod.api.world.position.Location;
-import com.pragprog.ahmine.ez.EZPlugin;
+import com.pragprog.ahmine.ez.EZPlugin;//(1)
 
 public class Simple extends EZPlugin {
   
