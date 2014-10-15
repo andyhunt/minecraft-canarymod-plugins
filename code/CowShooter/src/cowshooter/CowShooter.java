@@ -6,7 +6,7 @@
  * We make no guarantees that this code is fit for any purpose. 
  * Visit http://www.pragmaticprogrammer.com/titles/ahmine2 for more book information.
 ***/
-package cowshooter; //(1)
+package cowshooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,8 @@ import net.canarymod.api.inventory.ItemType;
 import net.canarymod.api.world.blocks.Block;
 import net.canarymod.api.world.blocks.BlockType;
 import net.canarymod.api.entity.EntityType;
+import net.canarymod.api.entity.living.LivingBase;
 import net.canarymod.api.entity.living.animal.Cow;
-import net.canarymod.api.entity.EntityType;
 import net.canarymod.hook.player.ItemUseHook;
 import net.canarymod.plugin.PluginListener;
 import com.pragprog.ahmine.ez.EZPlugin;
@@ -41,7 +41,7 @@ public class CowShooter extends EZPlugin implements PluginListener {
   }  
    
   @HookHandler
-  public void onInteract(ItemUseHook event) {//(2)
+  public void onInteract(ItemUseHook event) {//(1)
 
     Player player = event.getPlayer();
 
@@ -49,12 +49,12 @@ public class CowShooter extends EZPlugin implements PluginListener {
       Location loc = player.getLocation();     
       loc.setY(loc.getY() + 2);
       
-      Cow cow = (Cow)spawnEntityLiving(loc, EntityType.COW);//(3)
+      Cow victim = (Cow)spawnEntityLiving(loc, EntityType.COW);//(2)
       
-      Canary.getServer().addSynchronousTask(new CowTask(cow));
+      Canary.getServer().addSynchronousTask(new CowTask(victim));
       
-      fling(player, cow, 3);
-      cow.setFireTicks(0);
+      fling(player, victim, 3);
+      victim.setFireTicks(0);
     }
   } 
 }

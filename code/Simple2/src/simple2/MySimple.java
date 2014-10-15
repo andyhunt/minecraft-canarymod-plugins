@@ -24,7 +24,7 @@ public class MySimple extends EZPlugin {
   }
     
   @Command(aliases = { "mysimple" },
-            description = "Displays Andy's simple variable assigments",
+            description = "Displays Andy's simple variable assignments",
             permissions = { "" },
             toolTip = "/mysimple")
   public void mysimpleCommand(MessageReceiver caller, String[] parameters) {

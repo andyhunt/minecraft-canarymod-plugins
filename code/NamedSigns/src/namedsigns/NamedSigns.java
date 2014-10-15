@@ -78,7 +78,7 @@ public class NamedSigns extends EZPlugin {
   }
 
   @Command(aliases = { "signs" },
-            description = "Create and name sign posts",
+            description = "Create and name signposts",
             permissions = { "" },
             toolTip = "/signs new name, or /signs set name message")
   public void signsCommand(MessageReceiver caller, String[] args) {

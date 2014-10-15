@@ -38,13 +38,13 @@ public class CakeTower extends EZPlugin {
       cakeHeight = 5;
       me.chat("2) cake height is " + cakeHeight); // Print it
       
-      makeCakes(me); // Print it
+      makeCakes(me);
 
     }
   }
   
   public void makeCakes(Player me) {
-    me.chat("3) cake height is " + cakeHeight);
+    me.chat("3) cake height is " + cakeHeight);  // Print it
     Location loc = me.getLocation();
     loc.setY(loc.getY() + 2);
     setBlockAt(loc, BlockType.Stone);

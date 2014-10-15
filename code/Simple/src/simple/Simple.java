@@ -18,7 +18,7 @@ import com.pragprog.ahmine.ez.EZPlugin;//(1)
 public class Simple extends EZPlugin {
   
   @Command(aliases = { "simple" },
-            description = "Displays simple variable assigments",
+            description = "Displays simple variable assignments",
             permissions = { "" },
             toolTip = "/simple")
   public void simpleCommand(MessageReceiver caller, String[] parameters) {

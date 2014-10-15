@@ -51,7 +51,7 @@ public class LocationSnapshot extends EZPlugin {
   }
 
   private void loadLocations() {
-    //Go through play list; if they are in the hash, teleport them.
+    //Go through list of players; if they are in the hash, teleport them.
     List<Player> playerList = Canary.getServer().getPlayerList();
     for (Player player : playerList) {
       String name = player.getDisplayName();

@@ -57,8 +57,8 @@ public class SquidBombConfig extends EZPlugin {
       Location loc = me.getLocation();
       double y = loc.getY();
       loc.setY(y + squidDropHeight);  
-      me.chat("Spawning " + numSquids + " squids.");
-      //spawning some squids.
+      me.chat("Spawning " + numSquids + " squid.");
+      // Spawning some squid. Derp.
       for (int i = 0; i < numSquids; i++) {
           spawnEntityLiving(loc, EntityType.SQUID);
       }
