@@ -50,31 +50,29 @@ public class NamedSigns extends EZPlugin {
   }
 
   // signs new sign_name 
-  private boolean makeNewSign(Player me, String [] args) {//(5) 
+  private void makeNewSign(Player me, String [] args) {//(5) 
     Location loc = me.getLocation();
     loc.setX(loc.getX() + 1); // Not right on top of player
     int y = loc.getWorld().getHighestBlockAt((int)loc.getX(),(int)loc.getZ());
     loc.setY(y);
     signs.put(args[2], loc);
     setBlockAt(loc, BlockType.SignPost);
-    return true;
   }
 
   // signs set sign_name line1
-  private boolean setSign(Player me, String [] args) {//(6) 
+  private void setSign(Player me, String [] args) {//(6) 
     String name = args[2];
     String msg = args[3];
     if (!signs.containsKey(name)) {
       // No such named sign
       me.chat("No sign named " + name);
-      return false;
+      return;
     }
     Location loc = signs.get(name);
     World world = loc.getWorld();
     Sign sign = (Sign)world.getTileEntity(world.getBlockAt(loc));//(7)
     sign.setTextOnLine(msg, 0);
     sign.update();
-    return true;
   }
 
   @Command(aliases = { "signs" },

@@ -34,7 +34,7 @@ public class SquidBombConfig extends EZPlugin {
   //
   //numSquids=6
   //squidDropHeight=5
-  //setFire=true
+  //setFire=false
   
   public boolean enable() {
     super.enable();//Compiler will call this if you don't
@@ -78,7 +78,7 @@ public class SquidBombConfig extends EZPlugin {
         if (entity instanceof Squid) {
           Squid victim = (Squid)entity;
           if (setFire) {
-            victim.setFireTicks(20);
+            victim.setFireTicks(600);
           } else {
             victim.setHealth(0.0f);
           }

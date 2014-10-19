@@ -54,7 +54,10 @@ public class CreeperCow extends EZPlugin implements PluginListener {
     return super.enable(); // Call parent class's version too.
   } 
   
-  public void spawnCows(World world, double x, double z, int size, int count) {
+  public void spawnCows(Location target, int size, int count) {
+    World world = target.getWorld();
+    double x = target.getX();
+    double z = target.getZ();
     for (int i=0; i< count; i++) {
       Location loc = new Location(world,
         x + (Math.random() * size),
@@ -90,9 +93,7 @@ public class CreeperCow extends EZPlugin implements PluginListener {
         enabled = true;
         me.chat("Creeper Cows are enabled");
         // Start off with a few right here ;)
-        spawnCows(me.getWorld(), me.getLocation().getX() + 10, 
-                         me.getLocation().getZ() + 10,
-                         25, 5);
+        spawnCows(me.getLocation(), 25, 5);
       } else {
         enabled = false;
         me.chat("Creeper Cows are disabled");
@@ -109,8 +110,9 @@ public class CreeperCow extends EZPlugin implements PluginListener {
     if (caller instanceof Player) { 
       Player me = (Player)caller;       
       Location loc = me.getLocation();
-      spawnCows(loc.getWorld(), loc.getX(), loc.getZ(),
-          Integer.parseInt(args[1]), Integer.parseInt(args[2]));
+      spawnCows(loc,
+          Integer.parseInt(args[1]), 
+          Integer.parseInt(args[2]));
     }
   }
 
@@ -161,9 +163,11 @@ public class CreeperCow extends EZPlugin implements PluginListener {
       // The X and Z from the chunk are indexes;
       // we have to multiply by 16 to get an actual
       // block location.
-      spawnCows(world, chunk.getX() * CHUNK_SIZE, 
-                       chunk.getZ() * CHUNK_SIZE, 
-                       16, 1);
+      Location start = new Location( 
+          chunk.getX() * CHUNK_SIZE,
+          0,
+          chunk.getZ() * CHUNK_SIZE);
+      spawnCows(start, 16, 1);
     }
   } 
   

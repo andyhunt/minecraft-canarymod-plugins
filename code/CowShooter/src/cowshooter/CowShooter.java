@@ -54,7 +54,7 @@ public class CowShooter extends EZPlugin implements PluginListener {
       Canary.getServer().addSynchronousTask(new CowTask(victim));
       
       fling(player, victim, 3);
-      victim.setFireTicks(0);
+      victim.setFireTicks(600);
     }
   } 
 }

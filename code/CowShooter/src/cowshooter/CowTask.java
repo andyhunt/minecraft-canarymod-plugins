@@ -37,7 +37,7 @@ public class CowTask extends ServerTask {
           2.0f, true);
         Canary.getServer().removeSynchronousTask(this);
       } else {
-        cow.setFireTicks(100);
+        cow.setFireTicks(600);
         cow.setHealth((float)cow.getMaxHealth());
       }
     }
